@@ -1,0 +1,76 @@
+# For complete reference:
+# https://serverless.com/framework/docs/providers/aws/guide/serverless.yml/
+
+service: Colonies
+
+frameworkVersion: ">=1.28.0 <2.0.0"
+
+# Project-specific settings.
+custom:
+  parent: Stoic
+  codename: Athena
+
+  stages:
+    dev: Dev
+    test: Test
+    prod: Prod
+
+# Serverless provider settings.
+provider:
+  name: aws
+  runtime: go1.x
+  region: us-west-2
+  stage: ${opt:stage, 'dev'}
+
+  # CloudFormation stack and API names.
+  stackName: ${self:custom.parent}-${self:custom.codename}-${self:service}-Stack
+  apiName: ${self:custom.parent}-${self:custom.codename}-${self:service}-Api
+
+  # Optional CloudFormation stack tags.
+  stackTags:
+    parent: ${self:custom.parent}
+    codename: ${self:custom.codename}
+    service: ${self:service}
+
+  # Optional service tags.
+  tags:
+    parent: ${self:custom.parent}
+    codename: ${self:custom.codename}
+    service: ${self:service}
+
+package:
+  exclude:
+  - ./**
+  include:
+  - ./bin/**
+
+functions:
+  create:
+    handler: bin/create
+    name: ${self:custom.parent}-${self:custom.codename}-${self:service}-${self:custom.stages.${self:provider.stage}}-Create-Func
+    events:
+    - http:
+        path: colonies
+        method: post
+        cors: true
+
+    # Optional function tags.
+    tags:
+      parent: ${self:custom.parent}
+      codename: ${self:custom.codename}
+      service: ${self:service}
+
+  read:
+    handler: bin/read
+    name: ${self:custom.parent}-${self:custom.codename}-${self:service}-${self:custom.stages.${self:provider.stage}}-Read-Func
+    events:
+    - http:
+        path: colonies/{id}
+        method: get
+        cors: true
+
+    # Optional function tags.
+    tags:
+      parent: ${self:custom.parent}
+      codename: ${self:custom.codename}
+      service: ${self:service}

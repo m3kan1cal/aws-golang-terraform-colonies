@@ -1,0 +1,17 @@
+{
+    "name": "aws-golang-terraform-colonies",
+    "version": "0.0.1",
+    "description": "Example demonstrates how to setup a simple HTTP GET/POST endpoint with golang.",
+    "author": "Mark Fowler <mlfowler@magellanhealth.com>",
+    "license": "MIT",
+    "keywords": [
+      "Go",
+      "serverless",
+      "aws",
+      "dynamodb",
+      "auth",
+      "tdd",
+      "test",
+      "testing"
+    ]
+  }
