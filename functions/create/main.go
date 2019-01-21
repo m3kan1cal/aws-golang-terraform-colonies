@@ -37,12 +37,12 @@ func Handler(ctx context.Context, req libs.Request) (libs.Response, error) {
 	}
 
 	// Validation for colony metadata. Return 400 if fails.
-	if !colonyRegExp.MatchString(clx.Name) || !planetRegExp.MatchString(clx.Planet) ||
+	if !colonyRegExp.MatchString(clx.ColonyID) || !planetRegExp.MatchString(clx.Planet) ||
 		!corporationRegExp.MatchString(clx.Corporation) {
 		log.Print("[REGEX FAILED]: ", req)
 		return libs.WrapError(http.StatusBadRequest, "Bad values in query and/or request")
 	}
-	if clx.Name == "" || clx.Planet == "" ||
+	if clx.ColonyID == "" || clx.Planet == "" ||
 		clx.Corporation == "" || clx.Coords == "" {
 		log.Print("[VALUES FAILED]: ", req)
 		return libs.WrapError(http.StatusBadRequest, "Bad values in query and/or request")
@@ -68,7 +68,7 @@ func Handler(ctx context.Context, req libs.Request) (libs.Response, error) {
 		Headers: map[string]string{
 			"Content-Type":       "application/json",
 			"X-Athena-API-Reply": "create-handler",
-			"Location":           fmt.Sprintf("/colonies/%s", clx.Name),
+			"Location":           fmt.Sprintf("/colonies/%s", clx.ColonyID),
 		},
 	}
 

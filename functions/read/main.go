@@ -33,7 +33,7 @@ func Handler(ctx context.Context, req libs.Request) (libs.Response, error) {
 	// @todo: Insert data layer persistence logic here.
 
 	clx := libs.Colony{
-		Name:        "ABCDEF-0123456789XYZ",
+		ColonyID:    "ABCDEF-0123456789XYZ",
 		Planet:      "SIRIUS",
 		Corporation: "117-TETRISCORP",
 		Coords:      "100.2342356234, -345.7823425345",
