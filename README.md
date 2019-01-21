@@ -13,6 +13,17 @@ This is an ongoing project and will receive continued feature work. In it's curr
 
 For the structure of our project, we're going to be following a **Microservice style** approach. Each AWS Lambda function is responsible for one action only. For example, there are 4 separate Lambda functions for reading, creating, updating and deleting a colony within our Colony service.
 
+For the metadata tied to the initial entity in the project, `Colony`, the current structure is listed below. There are **regular expressions** that describe the validation attached to each of these properties.
+
+```json
+{
+    "colonyId": "ABCDEF-0123456789XYZ",
+    "planet": "SIRIUS",
+    "corporation": "117-TETRISCORP",
+    "coords": "100.2342356234, -345.7823425345"
+}
+```
+
 ## Working with API Gateway Events in Lambda
 
 The easiest way in **Go** to provide the responses that the AWS API Gateway needs is to install the `github.com/aws/aws-lambda-go/events` package:
@@ -121,12 +132,12 @@ Once deployed to AWS, now test that the `create` function is working. Make sure 
 curl -X POST \
   https://6s6prv1gfe.execute-api.us-west-2.amazonaws.com/dev/colonies \
   -H 'Content-Type: application/json' \
-  -d '{"name":"ABCDEF-0123456789XYZ","planet":"SIRIUS","corporation":"117-TETRISCORP","coords":"100.2342356234, -345.7823425345"}'
+  -d '{"colonyId":"ABCDEF-0123456789XYZ","planet":"SIRIUS","corporation":"117-TETRISCORP","coords":"100.2342356234, -345.7823425345"}'
 
 {
     "message": "Colony created successfully",
     "transmission": {
-        "name": "ABCDEF-0123456789XYZ",
+        "colonyId": "ABCDEF-0123456789XYZ",
         "planet": "SIRIUS",
         "corporation": "117-TETRISCORP",
         "coords": "100.2342356234, -345.7823425345"
@@ -144,10 +155,10 @@ curl -X GET \
 {
     "message": "Colony read successfully",
     "transmission": {
-        "name": "ABCDEF-0123456789XYZ",
+        "colonyId": "ABCDEF-0123456789XYZ",
         "planet": "SIRIUS",
         "corporation": "117-TETRISCORP",
-        "coords": "1.02345, -2.23456"
+        "coords": "100.2342356234, -345.7823425345"
     }
 }
 ```

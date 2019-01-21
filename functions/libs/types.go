@@ -12,7 +12,7 @@ type Request events.APIGatewayProxyRequest
 
 // Colony represents metadata attached to colony.
 type Colony struct {
-	Name        string `json:"name"`
+	ColonyID    string `json:"colonyId"`
 	Planet      string `json:"planet"`
 	Corporation string `json:"corporation"`
 	Coords      string `json:"coords"`
